@@ -1,8 +1,8 @@
-// Store our API endpoint inside queryUrl
+// query the website for geojson
 var queryUrl = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson"
 // Perform a GET request to the query URL
 d3.json(queryUrl, function(data) {
-  // Once we get a response, send the data.features object to the createFeatures function
+  // function to create map on features of the geojson
   createFeatures(data.features);
 });
 
@@ -21,20 +21,23 @@ function createFeatures(earthquakeData) {
   var earthquakes = L.geoJSON(earthquakeData, {
     onEachFeature: onEachFeature,
     pointToLayer: function (feature, latlng){
+      //create circle marker instead of regular marker
       return L.circleMarker(latlng,{
+        //run the radius function to generate a proportional radius for the marker based on eq mag
         radius: getRadius(feature.properties.mag),
+        //set color scheme for the magnitutdes
         color: getColor(feature.properties.mag)
       }
     )}
   });
 
-  // Sending our earthquakes layer to the createMap function
+  // run createMap function
   createMap(earthquakes);
 }
 
 function createMap(earthquakes) {
 
-  // Define streetmap and darkmap layers
+  // Define layers
   var streetmap = L.tileLayer("https://api.mapbox.com/styles/v1/mapbox/outdoors-v10/tiles/256/{z}/{x}/{y}?" +
     "access_token=pk.eyJ1Ijoia2pnMzEwIiwiYSI6ImNpdGRjbWhxdjAwNG0yb3A5b21jOXluZTUifQ." +
     "T6YbdDixkOBWH_k9GbS8JQ");
@@ -70,6 +73,26 @@ function createMap(earthquakes) {
   L.control.layers(baseMaps, overlayMaps, {
     collapsed: false
   }).addTo(myMap);
+  //define legend variable
+var legend = L.control({position: 'bottomright'});
+
+legend.onAdd = function (map) {
+
+    var div = L.DomUtil.create('div', 'info legend'),
+        grades = [0, 2, 4, 6, 8],
+        labels = [];
+
+    // loop through our density intervals and generate a label with a colored square for each interval
+    for (var i = 0; i < grades.length; i++) {
+        div.innerHTML +=
+            '<i style="background:' + getColor(grades[i] + 1) + '"></i> ' +
+            grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
+    }
+
+    return div;
+};
+
+legend.addTo(myMap);
 }
 //create a function to magnify the radius
 function getRadius(data){
@@ -77,9 +100,10 @@ function getRadius(data){
 }
 //create a function to separate the data into color groups based on mag
 function getColor(data) {
-  return data > 8 ? '#f0f9e8' :
-         data > 6  ? '#bae4bc' :
-         data > 4  ? '#7bccc4' :
-         data > 2 ? '#43a2ca' :
-                    '#0868ac';
+  return data > 8 ? '#b30000' :
+         data > 6  ? '#e34a33' :
+         data > 4  ? '#045a8d' :
+         data > 2 ? '#2b8cbe' :
+                    '#74a9cf';
 }
+
