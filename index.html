@@ -11,9 +11,15 @@
   <!--D3 cdn-->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.5.0/d3.min.js"></script>
 
-  <!-- Leaflet Timeline CSS -->
-  <link rel="stylesheet" type="text/css" href="leaflet.timeline.min.css">
+  
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
+  <!-- Optional theme -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
   
 
   <!-- Our CSS -->
@@ -22,14 +28,23 @@
 </head>
 
 <body>
+  <div class="jumbotron">
+    <h1 class="text-center">USGS Earthquake Data</h1>
+    <p class="text-center">A look at earthquakes around the world in the past 7 days</p>
+  </div>
+  <div class="container">
+    <div class="page-header">
+      <h2>A graphical representation of earthquakes all around the world for the past 7 days.</h2>
+      <p>The data is scraped from the <a href="https://earthquake.usgs.gov/earthquakes/feed/v1.0/geojson.php">USGS Earthquakes Website.</a> The data is for comprises of earthquakes of all magnitudes.
+      The default setting is a heatmap of all the earthquakes.  There are control options for a bubble plot and a tectonic plate layer.  The bubble plot sizes are proportional to earthquake magnitude.</p>
+    </div>
+  </div>
   <!-- The div where we will inject our map -->
   <div id="map"></div>
   
   <!-- Our JS -->
   <script type="text/javascript" src="app.js"></script>
 
-  <!-- leaflet timeline plugin -->
-  <script type="text/javascript" src="leaflet.timeline.js"></script>
   <!-- leaflet heat plugin -->
   <script type="text/javascript" src="leaflet-heat.js"></script>
 

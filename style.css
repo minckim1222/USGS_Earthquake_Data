@@ -3,6 +3,7 @@
 body {
   padding: 0;
   margin: 0;
+  background-color: black;
 }
 
 /* set map, body, and html to 100% of the screen size */
@@ -16,6 +17,7 @@ html {
 .legend {
   line-height: 18px;
   color: #555;
+  background-color: white;
 }
 
 .legend i {
@@ -24,4 +26,18 @@ html {
   float: left;
   margin-right: 8px;
   opacity: 0.7;
+}
+
+.jumbotron{
+  background-image:url(seismic.jpg);
+  background-position: 0% 90%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    width: 100%;
+  margin-bottom: 0;
+}
+.page-header { 
+  border-bottom:none; 
+  color: white;
+  
 }
