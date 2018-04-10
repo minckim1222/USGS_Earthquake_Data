@@ -7,7 +7,7 @@ d3.json(queryUrl, function (data) {
 });
 
 function createFeatures(earthquakeData) {
-
+  
   // Define a function we want to run once for each feature in the features array
   // Give each feature a popup describing the place and time of the earthquake
   function onEachFeature(feature, layer) {
@@ -53,7 +53,8 @@ function createMap(earthquakes) {
   // Create overlay object to hold our overlay layer
   var overlayMaps = {
     Earthquakes: earthquakes,
-    "Tectonic Plates": tectonicPlates
+    "Tectonic Plates": tectonicPlates,
+    // "Heat Map" : heatLayer
   };
 
   // Create our map, giving it the streetmap and earthquakes layers to display on load
@@ -106,8 +107,29 @@ function createMap(earthquakes) {
       .addTo(tectonicPlates);
 
       // Then add the tectonicplates layer to the map.
-      tectonicPlates.addTo(myMap);
+      // tectonicPlates.addTo(myMap);
     });
+    var heatCoords = [];
+
+    d3.json(queryUrl, function(error, response){
+      if(error) console.warn(error);
+      for( q = 1; q < response.features.length; q++){
+        var currQuake = response.features[q];
+        var currLong = currQuake.geometry.coordinates[0];
+        var currLat = currQuake.geometry.coordinates[1];
+        // var currMag = currQuake.geometry.coordinates[2];  
+        var currCoords = []
+        currCoords.push(currLat,currLong);
+        heatCoords.push(currCoords);
+      }
+      var heat = L.heatLayer(heatCoords, {
+        radius: 75,
+        max : 1,
+        blur: 15,
+        gradient: {0.4: 'blue', 0.65: 'lime', 1: 'red'}
+      }).addTo(myMap);
+    })
+  
 }
 //create a function to magnify the radius
 function getRadius(data) {

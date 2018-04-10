@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Geo JSON</title>
+  <title>USGS Earthquake Data</title>
 
   <!-- Leaflet CSS & JS -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.2/dist/leaflet.css" />
@@ -11,8 +11,14 @@
   <!--D3 cdn-->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.5.0/d3.min.js"></script>
 
+  <!-- Leaflet Timeline CSS -->
+  <link rel="stylesheet" type="text/css" href="leaflet.timeline.min.css">
+
+  
+
   <!-- Our CSS -->
   <link rel="stylesheet" type="text/css" href="style.css">
+
 </head>
 
 <body>
@@ -21,5 +27,11 @@
   
   <!-- Our JS -->
   <script type="text/javascript" src="app.js"></script>
+
+  <!-- leaflet timeline plugin -->
+  <script type="text/javascript" src="leaflet.timeline.js"></script>
+  <!-- leaflet heat plugin -->
+  <script type="text/javascript" src="leaflet-heat.js"></script>
+
 </body>
 </html>
