@@ -35,6 +35,8 @@ function createFeatures(earthquakeData) {
   createMap(earthquakes);
 }
 var tectonicPlates = new L.LayerGroup();
+var heat = new L.LayerGroup();
+
 function createMap(earthquakes) {
 
   // Define layers
@@ -54,7 +56,7 @@ function createMap(earthquakes) {
   var overlayMaps = {
     Earthquakes: earthquakes,
     "Tectonic Plates": tectonicPlates,
-    // "Heat Map" : heatLayer
+    "Heat Map" : heat
   };
 
   // Create our map, giving it the streetmap and earthquakes layers to display on load
@@ -64,7 +66,7 @@ function createMap(earthquakes) {
     ],
     zoom: 5,
     scrollWheelZoom: false,
-    layers: [streetmap, earthquakes]
+    layers: [streetmap]
   });
 
   // Create a layer control
@@ -109,27 +111,35 @@ function createMap(earthquakes) {
       // Then add the tectonicplates layer to the map.
       // tectonicPlates.addTo(myMap);
     });
-    var heatCoords = [];
+    
+    var currCoords = new Array();
 
     d3.json(queryUrl, function(error, response){
       if(error) console.warn(error);
       for( q = 1; q < response.features.length; q++){
+        var newArray = [];
+        // console.log(newArray)
         var currQuake = response.features[q];
         var currLong = currQuake.geometry.coordinates[0];
         var currLat = currQuake.geometry.coordinates[1];
-        // var currMag = currQuake.geometry.coordinates[2];  
-        var currCoords = []
-        currCoords.push(currLat,currLong);
-        heatCoords.push(currCoords);
+        var currMag = currQuake.properties.mag;  
+        var currIntensity = currMag * 20
+       
+        newArray.push(currLat,currLong, currIntensity);
+        // console.log(newArray)
+        currCoords.push(newArray)
       }
-      var heat = L.heatLayer(heatCoords, {
+      console.log(currCoords)
+      var heatMap = L.heatLayer(currCoords, {
         radius: 75,
         max : 1,
         blur: 15,
         gradient: {0.4: 'blue', 0.65: 'lime', 1: 'red'}
-      }).addTo(myMap);
+      }).addTo(heat);
+      // .addTo(myMap);
     })
-  
+    
+    
 }
 //create a function to magnify the radius
 function getRadius(data) {
@@ -143,3 +153,4 @@ function getColor(data) {
     data > 2 ? '#2b8cbe' :
     '#74a9cf';
 }
+
