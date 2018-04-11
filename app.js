@@ -131,7 +131,7 @@ function createMap(earthquakes) {
       }
       console.log(currCoords)
       var heatMap = L.heatLayer(currCoords, {
-        radius: 75,
+        radius: 50,
         max : 1,
         blur: 15,
         gradient: {0.4: 'blue', 0.65: 'lime', 1: 'red'}
